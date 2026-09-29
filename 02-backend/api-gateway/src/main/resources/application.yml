@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          use-insecure-trust-manager: true
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - https://localhost:4200
+              - http://localhost:4200
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders: '*'
+      routes:
+        - id: catalog-service
+          uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/products/**,/api/product-category/**
+        - id: monolith-service
+          uri: ${MONOLITH_SERVICE_URL:https://localhost:8445}
+          predicates:
+            - Path=/api/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
