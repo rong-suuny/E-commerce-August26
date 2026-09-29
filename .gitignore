@@ -1,0 +1,21 @@
+# macOS and IDE files
+.DS_Store
+.idea/
+*.iml
+
+# Java / Maven build output
+**/target/
+*.class
+*.log
+
+# Angular / Node build output
+**/node_modules/
+**/.angular/
+**/dist/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-secret.properties
